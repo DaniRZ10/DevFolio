@@ -109,4 +109,42 @@ class Validador {
 
         return this.validarCampos(campos);
     }
+/**
+* Muestra cada mensaje de error justo después de su campo.
+* @param {HTMLFormElement} formulario - Formulario donde se muestran los errores
+* @param {Array<{nombre: string, mensaje: string}>} errores - Resultado de validarFormulario()
+*/
+    mostrarErrores(formulario, errores) {
+        for (const error of errores) {
+            const campo = formulario.elements[error.nombre];
+
+            // Si el campo no existe en el formulario, no hay dónde mostrar el mensaje
+            if (!campo) {
+                continue;
+            }
+
+            // Marca el campo como inválido (útil para estilos y lectores de pantalla)
+            campo.setAttribute("aria-invalid", "true");
+
+            // textContent inserta el mensaje como texto, nunca como HTML
+            const aviso = document.createElement("span");
+            aviso.className = "error-validacion";
+            aviso.textContent = error.mensaje;
+            campo.insertAdjacentElement("afterend", aviso);
+        }
+    }
+
+    /**
+     * Elimina los mensajes de error y las marcas de campo inválido de un formulario.
+     * @param {HTMLFormElement} formulario - Formulario que se limpia
+     */
+    limpiarErrores(formulario) {
+        for (const aviso of formulario.querySelectorAll(".error-validacion")) {
+            aviso.remove();
+        }
+
+        for (const campo of formulario.querySelectorAll("[aria-invalid]")) {
+            campo.removeAttribute("aria-invalid");
+        }
+    }
 }
