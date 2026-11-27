@@ -50,7 +50,7 @@ class Validador {
 
         return this.patrones[tipo].test(texto);
     }
-    
+
 /**
 * Devuelve el mensaje de error asociado a un tipo de campo.
 * @param {string} tipo - Clave de this.mensajes
@@ -79,5 +79,34 @@ class Validador {
         }
 
         return errores;
+    }
+
+/**
+* Lee los valores de un formulario y los valida según unas reglas.
+* @param {HTMLFormElement} formulario - Formulario cuyos campos se leen
+* @param {Array<{nombre: string, tipo: string, opcional?: boolean}>} reglas
+*        nombre = atributo name del input; tipo = clave de this.patrones
+* @returns {Array<{nombre: string, mensaje: string}>} Lista de errores (vacía si todo es válido)
+*/
+    validarFormulario(formulario, reglas) {
+        const campos = [];
+
+        for (const regla of reglas) {
+            // formulario.elements permite acceder a cada control por su atributo name
+            const elemento = formulario.elements[regla.nombre];
+
+            if (!elemento) {
+                console.warn("Validador: no existe el campo '" + regla.nombre + "' en el formulario");
+            }
+
+            campos.push({
+                nombre: regla.nombre,
+                tipo: regla.tipo,
+                valor: elemento ? elemento.value : "",
+                opcional: regla.opcional
+            });
+        }
+
+        return this.validarCampos(campos);
     }
 }
