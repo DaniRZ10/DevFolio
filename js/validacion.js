@@ -209,3 +209,24 @@ class Validador {
         });
     }
 }
+
+// ---------------------------------------------------------------
+// Uso en DevFolio: un único objeto Validador para los formularios de la aplicación.
+// Este archivo se carga al final del <body> (includes/pie.php), cuando los formularios ya existen.
+// controlarSubmit no hace nada en las páginas que no tienen ese formulario.
+// ---------------------------------------------------------------
+const validador = new Validador();
+
+// Formulario de registro (registro.php)
+validador.controlarSubmit("form-registro", [
+    { id: "nombre", tipo: "nombre" },
+    { id: "email", tipo: "email" },
+    { id: "password", tipo: "password" }
+]);
+
+// Formulario de proyecto (proyecto-form.php)
+validador.controlarSubmit("form-proyecto", [
+    { id: "titulo", tipo: "titulo" },
+    { id: "descripcion", tipo: "descripcion" },
+    { id: "url_repo", tipo: "url", opcional: true }
+]);
