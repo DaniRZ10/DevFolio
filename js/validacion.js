@@ -50,4 +50,34 @@ class Validador {
 
         return this.patrones[tipo].test(texto);
     }
+    
+/**
+* Devuelve el mensaje de error asociado a un tipo de campo.
+* @param {string} tipo - Clave de this.mensajes
+* @returns {string} Mensaje de error (genérico si el tipo no existe)
+*/
+    obtenerMensaje(tipo) {
+        return this.mensajes[tipo] || "El valor introducido no es válido.";
+    }
+
+/**
+* Valida una lista de campos y devuelve los errores encontrados.
+* @param {Array<{nombre: string, tipo: string, valor: string, opcional?: boolean}>} campos
+* @returns {Array<{nombre: string, mensaje: string}>} Lista de errores (vacía si todo es válido)
+*/
+    validarCampos(campos) {
+        const errores = [];
+
+        // Se recorre cada campo y se guarda el error de los que no pasan la validación
+        for (const campo of campos) {
+            if (!this.validar(campo.tipo, campo.valor, campo.opcional)) {
+                errores.push({
+                    nombre: campo.nombre,
+                    mensaje: this.obtenerMensaje(campo.tipo)
+                });
+            }
+        }
+
+        return errores;
+    }
 }
