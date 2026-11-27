@@ -26,13 +26,13 @@ class Validador {
         };
     }
 
-/**
-* Comprueba un valor contra el patrón de su tipo de campo.
-* @param {string} tipo - Clave de this.patrones (nombre, email, password, url)
-* @param {string} valor - Texto a comprobar
-* @param {boolean} opcional - Si es true, un valor vacío se considera válido
-* @returns {boolean} true si el valor es válido
-*/
+    /**
+    * Comprueba un valor contra el patrón de su tipo de campo.
+    * @param {string} tipo - Clave de this.patrones (nombre, email, password, url)
+    * @param {string} valor - Texto a comprobar
+    * @param {boolean} opcional - Si es true, un valor vacío se considera válido
+    * @returns {boolean} true si el valor es válido
+    */
     validar(tipo, valor, opcional = false) {
         // Conversión a texto; solo se recortan espacios si no es una contraseña
         const texto = tipo === "password" ? String(valor) : String(valor).trim();
@@ -51,20 +51,20 @@ class Validador {
         return this.patrones[tipo].test(texto);
     }
 
-/**
-* Devuelve el mensaje de error asociado a un tipo de campo.
-* @param {string} tipo - Clave de this.mensajes
-* @returns {string} Mensaje de error (genérico si el tipo no existe)
-*/
+    /**
+    * Devuelve el mensaje de error asociado a un tipo de campo.
+    * @param {string} tipo - Clave de this.mensajes
+    * @returns {string} Mensaje de error (genérico si el tipo no existe)
+    */
     obtenerMensaje(tipo) {
         return this.mensajes[tipo] || "El valor introducido no es válido.";
     }
 
-/**
-* Valida una lista de campos y devuelve los errores encontrados.
-* @param {Array<{nombre: string, tipo: string, valor: string, opcional?: boolean}>} campos
-* @returns {Array<{nombre: string, mensaje: string}>} Lista de errores (vacía si todo es válido)
-*/
+    /**
+    * Valida una lista de campos y devuelve los errores encontrados.
+    * @param {Array<{nombre: string, tipo: string, valor: string, opcional?: boolean}>} campos
+    * @returns {Array<{nombre: string, mensaje: string}>} Lista de errores (vacía si todo es válido)
+    */
     validarCampos(campos) {
         const errores = [];
 
@@ -81,13 +81,13 @@ class Validador {
         return errores;
     }
 
-/**
-* Lee los valores de un formulario y los valida según unas reglas.
-* @param {HTMLFormElement} formulario - Formulario cuyos campos se leen
-* @param {Array<{nombre: string, tipo: string, opcional?: boolean}>} reglas
-*        nombre = atributo name del input; tipo = clave de this.patrones
-* @returns {Array<{nombre: string, mensaje: string}>} Lista de errores (vacía si todo es válido)
-*/
+    /**
+    * Lee los valores de un formulario y los valida según unas reglas.
+    * @param {HTMLFormElement} formulario - Formulario cuyos campos se leen
+    * @param {Array<{nombre: string, tipo: string, opcional?: boolean}>} reglas
+    *        nombre = atributo name del input; tipo = clave de this.patrones
+    * @returns {Array<{nombre: string, mensaje: string}>} Lista de errores (vacía si todo es válido)
+    */
     validarFormulario(formulario, reglas) {
         const campos = [];
 
@@ -109,11 +109,11 @@ class Validador {
 
         return this.validarCampos(campos);
     }
-/**
-* Muestra cada mensaje de error justo después de su campo.
-* @param {HTMLFormElement} formulario - Formulario donde se muestran los errores
-* @param {Array<{nombre: string, mensaje: string}>} errores - Resultado de validarFormulario()
-*/
+    /**
+    * Muestra cada mensaje de error justo después de su campo.
+    * @param {HTMLFormElement} formulario - Formulario donde se muestran los errores
+    * @param {Array<{nombre: string, mensaje: string}>} errores - Resultado de validarFormulario()
+    */
     mostrarErrores(formulario, errores) {
         for (const error of errores) {
             const campo = formulario.elements[error.nombre];
@@ -147,4 +147,34 @@ class Validador {
             campo.removeAttribute("aria-invalid");
         }
     }
+    
+    /**
+    * Engancha la validación al evento submit de un formulario.
+    * Si hay errores, los muestra y bloquea el envío.
+    * @param {HTMLFormElement} formulario - Formulario que se controla
+    * @param {Array<{nombre: string, tipo: string, opcional?: boolean}>} reglas
+    */
+    controlarSubmit(formulario, reglas) {
+        // Función flecha: conserva el this de Validador dentro del evento
+        formulario.addEventListener("submit", (evento) => {
+            // Se parte siempre de un formulario sin errores de intentos anteriores
+            this.limpiarErrores(formulario);
+
+            const errores = this.validarFormulario(formulario, reglas);
+
+            if (errores.length > 0) {
+                // Se cancela el envío al servidor
+                evento.preventDefault();
+                this.mostrarErrores(formulario, errores);
+
+                // Se lleva el foco al primer campo con error
+                const primero = formulario.elements[errores[0].nombre];
+                if (primero) {
+                    primero.focus();
+                }
+            }
+            // Si no hay errores, el formulario se envía con normalidad (GET/POST)
+        });
+    }
+
 }
