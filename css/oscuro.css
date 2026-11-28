@@ -1,0 +1,24 @@
+:root {
+  --df-fondo: #0F172A;
+  --df-superficie: #1E293B;
+  --df-texto: #E2E8F0;
+  --df-texto-rgb: 226, 232, 240;
+  --df-secundario: #94A3B8;
+  --df-primario: #A5B4FC;
+  --df-primario-rgb: 165, 180, 252;
+  --df-primario-hover: #C7D2FE;
+  --df-primario-hover-rgb: 199, 210, 254;
+  --df-texto-sobre-primario: #0F172A;
+  --df-acento: #5EEAD4;
+  --df-etiqueta-fondo: #134E4A;
+  --df-etiqueta-texto: #5EEAD4;
+  --df-borde: #334155;
+  --df-error: #F87171;
+  --df-anillo: rgba(165, 180, 252, 0.35);
+  --df-sombra: rgba(0, 0, 0, 0.4);
+  color-scheme: dark;
+}
+
+.navbar-toggler-icon {
+  filter: invert(1);
+}

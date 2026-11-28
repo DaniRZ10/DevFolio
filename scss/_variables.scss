@@ -1,0 +1,58 @@
+// Guía de estilo de DevFolio: paleta de cada tema, tipografías, medidas y puntos de corte.
+// Cada color se convierte en una variable CSS --df-<nombre> (ver el mixin variables-tema).
+// Los "-rgb" son los mismos colores en formato R, G, B porque Bootstrap los pide así.
+
+$tema-claro: (
+    fondo: #F8FAFC,
+    superficie: #FFFFFF,
+    texto: #0F172A,
+    texto-rgb: (15, 23, 42),
+    secundario: #475569,
+    primario: #4338CA,
+    primario-rgb: (67, 56, 202),
+    primario-hover: #3730A3,
+    primario-hover-rgb: (55, 48, 163),
+    texto-sobre-primario: #FFFFFF,
+    acento: #0F766E,
+    etiqueta-fondo: #CCFBF1,
+    etiqueta-texto: #115E59,
+    borde: #E2E8F0,
+    error: #B91C1C,
+    anillo: rgba(67, 56, 202, 0.25),
+    sombra: rgba(15, 23, 42, 0.12)
+);
+
+$tema-oscuro: (
+    fondo: #0F172A,
+    superficie: #1E293B,
+    texto: #E2E8F0,
+    texto-rgb: (226, 232, 240),
+    secundario: #94A3B8,
+    primario: #A5B4FC,
+    primario-rgb: (165, 180, 252),
+    primario-hover: #C7D2FE,
+    primario-hover-rgb: (199, 210, 254),
+    texto-sobre-primario: #0F172A,
+    acento: #5EEAD4,
+    etiqueta-fondo: #134E4A,
+    etiqueta-texto: #5EEAD4,
+    borde: #334155,
+    error: #F87171,
+    anillo: rgba(165, 180, 252, 0.35),
+    sombra: rgba(0, 0, 0, 0.4)
+);
+
+// Tipografías
+$fuente-titulos: "Space Grotesk", system-ui, sans-serif;
+$fuente-texto: "Inter", system-ui, sans-serif;
+$fuente-codigo: "JetBrains Mono", ui-monospace, monospace;
+
+// Medidas
+$espacio-base: 0.5rem; // regla de los 8px: todos los espacios son múltiplos de 8px
+$radio: 0.75rem;
+$duracion: 0.2s;
+$tactil-minimo: 2.75rem; // 44px, tamaño mínimo de un control táctil (WCAG)
+
+// Puntos de corte (los mismos que Bootstrap)
+$bp-md: 768px;
+$bp-lg: 992px;

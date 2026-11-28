@@ -1,0 +1,47 @@
+// Cabecera (barra de navegación) y pie de la plantilla común
+@use "variables" as *;
+@use "mixins" as *;
+
+.barra-nav {
+    --bs-navbar-color: var(--df-secundario);
+    --bs-navbar-hover-color: var(--df-primario);
+    --bs-navbar-active-color: var(--df-primario);
+    --bs-navbar-brand-color: var(--df-texto);
+    --bs-navbar-brand-hover-color: var(--df-primario);
+    background-color: var(--df-superficie);
+    border-bottom: 1px solid var(--df-borde);
+
+    .nav-link {
+        @include objetivo-tactil;
+        border-radius: espacio(1);
+        @include transicion(color, background-color);
+
+        &:hover {
+            background-color: var(--df-fondo);
+        }
+
+        &.active {
+            font-weight: 600;
+        }
+    }
+
+    @include desde($bp-md) {
+        padding-top: espacio(2);
+        padding-bottom: espacio(2);
+    }
+}
+
+.marca {
+    font-size: 1.5rem;
+}
+
+.boton-tema {
+    @include objetivo-tactil;
+}
+
+.pie {
+    background-color: var(--df-superficie);
+    border-top: 1px solid var(--df-borde);
+    color: var(--df-secundario);
+    font-size: 0.9rem;
+}

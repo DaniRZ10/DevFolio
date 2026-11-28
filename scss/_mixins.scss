@@ -1,0 +1,62 @@
+// Funciones y mixins reutilizables
+@use "variables" as *;
+
+// Devuelve un espacio múltiplo de 8px: espacio(2) = 1rem (16px)
+@function espacio($factor) {
+    @return $espacio-base * $factor;
+}
+
+// Crea una variable CSS --df-<nombre> por cada color del mapa del tema
+@mixin variables-tema($tema) {
+    @each $nombre, $valor in $tema {
+        --df-#{$nombre}: #{$valor};
+    }
+}
+
+// Botón de Bootstrap con los colores de nuestra paleta (relleno o solo contorno)
+@mixin boton-paleta($contorno: false) {
+    @if $contorno {
+        --bs-btn-color: var(--df-primario);
+        --bs-btn-border-color: var(--df-primario);
+        --bs-btn-hover-bg: var(--df-primario);
+        --bs-btn-hover-border-color: var(--df-primario);
+    } @else {
+        --bs-btn-color: var(--df-texto-sobre-primario);
+        --bs-btn-bg: var(--df-primario);
+        --bs-btn-border-color: var(--df-primario);
+        --bs-btn-hover-bg: var(--df-primario-hover);
+        --bs-btn-hover-border-color: var(--df-primario-hover);
+    }
+    --bs-btn-hover-color: var(--df-texto-sobre-primario);
+    --bs-btn-active-color: var(--df-texto-sobre-primario);
+    --bs-btn-active-bg: var(--df-primario-hover);
+    --bs-btn-active-border-color: var(--df-primario-hover);
+    --bs-btn-focus-shadow-rgb: var(--df-primario-rgb);
+}
+
+// Transición suave para los cambios de estado (hover, focus, active)
+@mixin transicion($propiedades...) {
+    transition-property: $propiedades;
+    transition-duration: $duracion;
+    transition-timing-function: ease-in-out;
+}
+
+// Anillo de foco visible al navegar con teclado
+@mixin foco-visible {
+    outline: 3px solid var(--df-primario);
+    outline-offset: 2px;
+}
+
+// Altura mínima de 44px para que se pueda pulsar bien con el dedo
+@mixin objetivo-tactil {
+    display: flex;
+    align-items: center;
+    min-height: $tactil-minimo;
+}
+
+// Media query "desde este ancho en adelante" (mobile first)
+@mixin desde($ancho) {
+    @media (min-width: $ancho) {
+        @content;
+    }
+}

@@ -1,0 +1,73 @@
+// Variables del tema claro, adaptación de Bootstrap y estilos base
+@use "variables" as *;
+@use "mixins" as *;
+
+:root {
+    @include variables-tema($tema-claro);
+
+    // Bootstrap usa estas variables en body, enlaces, tablas y formularios.
+    // Al apuntarlas a las nuestras, el tema oscuro solo tiene que cambiar las --df-*
+    --bs-body-bg: var(--df-fondo);
+    --bs-body-color: var(--df-texto);
+    --bs-emphasis-color: var(--df-texto);
+    --bs-emphasis-color-rgb: var(--df-texto-rgb);
+    --bs-secondary-color: var(--df-secundario);
+    --bs-border-color: var(--df-borde);
+    --bs-link-color: var(--df-primario);
+    --bs-link-color-rgb: var(--df-primario-rgb);
+    --bs-link-hover-color: var(--df-primario-hover);
+    --bs-link-hover-color-rgb: var(--df-primario-hover-rgb);
+    --bs-body-font-family: #{$fuente-texto};
+}
+
+body {
+    font-family: $fuente-texto;
+    line-height: 1.6;
+}
+
+h1,
+h2,
+h3,
+h4,
+.marca {
+    font-family: $fuente-titulos;
+    font-weight: 700;
+}
+
+h1 {
+    font-size: 1.9rem;
+
+    @include desde($bp-md) {
+        font-size: 2.5rem;
+    }
+}
+
+code,
+kbd {
+    font-family: $fuente-codigo;
+}
+
+a {
+    @include transicion(color);
+}
+
+:focus-visible {
+    @include foco-visible;
+}
+
+// Enlace oculto que aparece al tabular: salta el menú y va al contenido
+.saltar-contenido {
+    position: absolute;
+    top: -3rem;
+    left: espacio(2);
+    z-index: 1000;
+    padding: espacio(1) espacio(2);
+    background-color: var(--df-primario);
+    color: var(--df-texto-sobre-primario);
+    border-radius: $radio;
+    @include transicion(top);
+
+    &:focus {
+        top: espacio(2);
+    }
+}

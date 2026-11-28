@@ -1,0 +1,76 @@
+// Clases reutilizables propias de DevFolio
+@use "variables" as *;
+@use "mixins" as *;
+
+// Tarjeta de proyecto: imagen de portada + título + descripción + etiquetas
+.tarjeta-proyecto {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    overflow: hidden;
+    background-color: var(--df-superficie);
+    border: 1px solid var(--df-borde);
+    border-radius: $radio;
+    @include transicion(transform, box-shadow, border-color);
+
+    &:hover,
+    &:focus-within {
+        transform: translateY(-4px);
+        border-color: var(--df-primario);
+        box-shadow: 0 espacio(1.5) espacio(3) var(--df-sombra);
+    }
+
+    &__imagen {
+        width: 100%;
+        aspect-ratio: 16 / 9;
+        object-fit: cover;
+    }
+
+    &__cuerpo {
+        display: flex;
+        flex-direction: column;
+        flex-grow: 1;
+        gap: espacio(1);
+        padding: espacio(2);
+    }
+
+    &__titulo {
+        margin: 0;
+        font-family: $fuente-titulos;
+        font-size: 1.25rem;
+    }
+
+    &__descripcion {
+        margin: 0;
+        color: var(--df-secundario);
+    }
+}
+
+// Etiqueta de tecnología (PHP, JavaScript...)
+.etiqueta {
+    display: inline-block;
+    padding: 0.15rem 0.6rem;
+    font-family: $fuente-codigo;
+    font-size: 0.8rem;
+    color: var(--df-etiqueta-texto);
+    background-color: var(--df-etiqueta-fondo);
+    border-radius: 999px;
+}
+
+// Mensaje de confirmación o error tras un formulario
+.mensaje {
+    padding: espacio(1.5) espacio(2);
+    background-color: var(--df-superficie);
+    border: 1px solid var(--df-borde);
+    border-left-width: 4px;
+    border-radius: $radio;
+
+    &--exito {
+        border-left-color: var(--df-acento);
+    }
+
+    &--error {
+        border-left-color: var(--df-error);
+        color: var(--df-error);
+    }
+}

@@ -1,0 +1,7 @@
+// Hoja principal de DevFolio.
+// Se compila a css/estilos.css: sass scss/estilos.scss css/estilos.css --no-source-map
+// Se carga después de Bootstrap. Solo reúne los parciales, en este orden:
+@use "base";
+@use "layout";
+@use "ajustes-bootstrap";
+@use "componentes";

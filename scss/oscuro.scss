@@ -1,0 +1,15 @@
+// Tema alternativo oscuro.
+// Se compila a css/oscuro.css y se carga como hoja alternativa.
+// Solo cambia los colores: como estilos.css usa variables, el resto se adapta solo.
+@use "variables" as *;
+@use "mixins" as *;
+
+:root {
+    @include variables-tema($tema-oscuro);
+    color-scheme: dark; // controles nativos y barras de scroll en oscuro
+}
+
+// El color del icono del menú hamburguesa de Bootstrap se invierte para que se vea
+.navbar-toggler-icon {
+    filter: invert(1);
+}
